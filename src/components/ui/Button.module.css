@@ -1,0 +1,149 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  outline: none;
+  border: 1px solid transparent;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  letter-spacing: 0.3px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 按钮变体 */
+.primary {
+  background: linear-gradient(135deg, #9d4edd, #8a2be2);
+  color: white;
+  border-color: #8a2be2;
+  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.25);
+}
+
+.primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #a756ed, #7825c1);
+  box-shadow: 0 6px 16px rgba(138, 43, 226, 0.35);
+  transform: translateY(-2px);
+}
+
+.primary:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.2);
+}
+
+.secondary {
+  background-color: rgba(30, 30, 40, 0.8);
+  color: white;
+  border-color: rgba(60, 60, 70, 0.8);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: rgba(40, 40, 50, 0.8);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.secondary:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.outline {
+  background-color: transparent;
+  color: #9d4edd;
+  border-color: rgba(138, 43, 226, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.outline:hover:not(:disabled) {
+  background-color: rgba(138, 43, 226, 0.08);
+  border-color: rgba(138, 43, 226, 0.6);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.outline:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.danger {
+  background: linear-gradient(135deg, #e84545, #c62828);
+  color: white;
+  border-color: #c62828;
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.25);
+}
+
+.danger:hover:not(:disabled) {
+  background: linear-gradient(135deg, #f05454, #b71c1c);
+  box-shadow: 0 6px 16px rgba(230, 57, 70, 0.35);
+  transform: translateY(-2px);
+}
+
+.danger:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.2);
+}
+
+.success {
+  background: linear-gradient(135deg, #5cb85c, #2e7d32);
+  color: white;
+  border-color: #2e7d32;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.25);
+}
+
+.success:hover:not(:disabled) {
+  background: linear-gradient(135deg, #66c266, #1b5e20);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.35);
+  transform: translateY(-2px);
+}
+
+.success:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+}
+
+/* 按钮尺寸 */
+.sm {
+  font-size: 0.875rem;
+  padding: 0.5rem 0.875rem;
+  height: 2.25rem;
+}
+
+.md {
+  font-size: 1rem;
+  padding: 0.625rem 1.25rem;
+  height: 2.75rem;
+}
+
+.lg {
+  font-size: 1.125rem;
+  padding: 0.75rem 1.5rem;
+  height: 3.25rem;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.withIcon {
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+  font-size: 1.25em;
+} 

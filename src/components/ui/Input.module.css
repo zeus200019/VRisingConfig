@@ -1,0 +1,183 @@
+.inputContainer {
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.3px;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.numberInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(15, 15, 20, 0.6);
+  background-clip: padding-box;
+  border: 1px solid rgba(80, 80, 150, 0.3);
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  font-family: var(--font-sans);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.input:focus {
+  outline: none;
+  border-color: #9d4edd;
+  box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(20, 20, 30, 0.9);
+}
+
+.withNumberControls {
+  padding-right: 40px; /* 为按钮留出空间 */
+  text-align: center;
+  /* 隐藏原生的数字控制按钮 */
+}
+
+/* 额外的样式规则以确保在所有浏览器中隐藏原生控件 */
+.withNumberControls::-webkit-inner-spin-button,
+.withNumberControls::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.numberControls {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.showControls {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.controlButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 50%;
+  color: rgba(138, 43, 226, 0.8);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: rgba(138, 43, 226, 0.08);
+  border-left: 1px solid rgba(138, 43, 226, 0.15);
+}
+
+.upButton {
+  border-radius: 0 8px 0 0;
+  border-bottom: 1px solid rgba(138, 43, 226, 0.15);
+}
+
+.downButton {
+  border-radius: 0 0 8px 0;
+}
+
+.controlButton:hover {
+  background: rgba(138, 43, 226, 0.2);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.controlButton:active {
+  background: rgba(138, 43, 226, 0.3);
+  transform: scale(0.95);
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.withIcon {
+  padding-left: 2.5rem;
+}
+
+.icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.helperText {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+}
+
+.input:focus ~ .helperText {
+  color: rgba(138, 43, 226, 0.9);
+}
+
+.error {
+  border-color: rgba(229, 57, 53, 0.5);
+  background-color: rgba(229, 57, 53, 0.05);
+}
+
+.error:focus {
+  box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.2);
+  border-color: rgba(229, 57, 53, 0.7);
+}
+
+.errorText {
+  color: rgb(229, 57, 53);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* Hover effect */
+.input:hover:not(:focus):not(.error) {
+  border-color: rgba(138, 43, 226, 0.5);
+  background-color: rgba(20, 20, 30, 0.7);
+}
+
+/* 暗黑模式适配 */
+@media (prefers-color-scheme: dark) {
+  .input {
+    background-color: rgba(30, 30, 30, 0.7);
+    border-color: rgba(60, 60, 60, 0.8);
+    color: rgba(255, 255, 255, 0.95);
+  }
+  
+  .input:focus {
+    background-color: rgba(40, 40, 40, 0.9);
+  }
+  
+  .label {
+    color: rgba(255, 255, 255, 0.8);
+  }
+} 

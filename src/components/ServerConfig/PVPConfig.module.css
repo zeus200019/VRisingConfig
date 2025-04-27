@@ -1,0 +1,155 @@
+.card {
+  margin-bottom: 1.5rem;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+  background-color: rgba(20, 20, 30, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(138, 43, 226, 0.15);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.section:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border-color: rgba(138, 43, 226, 0.25);
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  color: rgba(255, 255, 255, 0.95);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sectionIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.4), rgba(157, 78, 221, 0.2));
+  border-radius: 50%;
+  font-size: 1rem;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  position: relative;
+}
+
+.checkboxGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.selectItem {
+  position: relative;
+}
+
+.selectItem:after {
+  content: '';
+  position: absolute;
+  bottom: -0.7rem;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, rgba(138, 43, 226, 0.05), transparent);
+}
+
+.checkboxWrapper {
+  background-color: rgba(15, 15, 20, 0.5);
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid rgba(138, 43, 226, 0.15);
+  transition: all 0.3s ease;
+}
+
+.checkboxWrapper:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-color: rgba(138, 43, 226, 0.25);
+}
+
+@media (min-width: 768px) {
+  .formGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .checkboxGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .formGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .checkboxGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .section {
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+  }
+  
+  .sectionTitle {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .sectionIcon {
+    width: 24px;
+    height: 24px;
+    font-size: 0.875rem;
+  }
+  
+  .checkboxWrapper {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+  
+  .checkboxGrid {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+  }
+  
+  .checkboxWrapper {
+    padding: 0.875rem;
+    border-radius: 8px;
+  }
+  
+  .formGrid {
+    gap: 1rem;
+  }
+} 

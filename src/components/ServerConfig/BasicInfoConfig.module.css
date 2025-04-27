@@ -1,0 +1,17 @@
+.card {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .formGroup {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+} 

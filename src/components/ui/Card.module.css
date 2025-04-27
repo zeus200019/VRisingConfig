@@ -1,0 +1,103 @@
+.card {
+  background-color: rgba(20, 20, 25, 0.7);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(120, 120, 180, 0.1);
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1.25rem;
+}
+
+.card:hover {
+  border-color: rgba(138, 43, 226, 0.2);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(60, 60, 80, 0.2);
+  background-color: rgba(10, 10, 15, 0.4);
+}
+
+.cardIcon {
+  margin-right: 1rem;
+  color: #9d4edd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.cardTitles {
+  flex: 1;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.cardSubtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.cardBody {
+  padding: 1.5rem;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .cardHeader {
+    padding: 1rem 1.25rem;
+  }
+  
+  .cardBody {
+    padding: 1.25rem 1rem;
+  }
+  
+  .cardTitle {
+    font-size: 1rem;
+  }
+  
+  .cardSubtitle {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardHeader {
+    padding: 0.875rem 1rem;
+  }
+  
+  .cardBody {
+    padding: 1rem 0.75rem;
+  }
+}
+
+/* 暗黑模式适配 */
+@media (prefers-color-scheme: dark) {
+  .card {
+    background-color: rgba(20, 20, 20, 0.7);
+    border-color: rgba(50, 50, 50, 0.8);
+  }
+  
+  .cardHeader {
+    background-color: rgba(30, 30, 30, 0.5);
+    border-bottom-color: rgba(50, 50, 50, 0.8);
+  }
+  
+  .cardTitle {
+    color: rgba(255, 255, 255, 0.95);
+  }
+  
+  .cardSubtitle {
+    color: rgba(255, 255, 255, 0.6);
+  }
+} 

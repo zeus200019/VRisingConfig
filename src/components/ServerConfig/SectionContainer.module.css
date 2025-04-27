@@ -1,0 +1,86 @@
+.section {
+  margin-bottom: 2.5rem;
+  background-color: rgba(20, 20, 25, 0.5);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(60, 60, 80, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.titleContainer {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(to right, #9d4edd, transparent);
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .section {
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    border-radius: 10px;
+  }
+  
+  .titleContainer {
+    margin-bottom: 1.25rem;
+  }
+  
+  .title {
+    font-size: 1.25rem;
+    padding-bottom: 0.625rem;
+    margin-bottom: 0.625rem;
+  }
+  
+  .subtitle {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+  }
+  
+  .titleContainer {
+    margin-bottom: 1rem;
+  }
+  
+  .title {
+    font-size: 1.125rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+} 

@@ -1,0 +1,318 @@
+.card {
+  margin-bottom: 1.5rem;
+}
+
+.timeSection {
+  margin-bottom: 2.5rem;
+  background: linear-gradient(to bottom right, rgba(20, 20, 30, 0.4), rgba(25, 25, 40, 0.3));
+  border-radius: 20px;
+  padding: 1.75rem;
+  border: 1px solid rgba(138, 43, 226, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(138, 43, 226, 0.1);
+}
+
+.timeSection:last-child {
+  margin-bottom: 0;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.98);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.sectionIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.5), rgba(157, 78, 221, 0.2));
+  border-radius: 12px;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.bloodIcon {
+  color: rgba(255, 80, 80, 0.9);
+}
+
+.dayNightPreview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(10, 10, 20, 0.5);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid rgba(138, 43, 226, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dayCycleLabel {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.previewIcon {
+  font-size: 1.1rem;
+  color: rgba(178, 110, 247, 0.9);
+}
+
+.dayCycleTime {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #b26ef7;
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 12px rgba(178, 110, 247, 0.3);
+  padding: 0.25rem 0.75rem;
+  background: rgba(138, 43, 226, 0.1);
+  border-radius: 6px;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.timeVisualizer {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(10, 10, 20, 0.35);
+  border-radius: 16px;
+  border: 1px solid rgba(138, 43, 226, 0.15);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timeAxis {
+  position: relative;
+  height: 32px;
+  margin-bottom: 0.75rem;
+}
+
+.timeTick {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  top: 0;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tickIcon {
+  font-size: 1.25rem;
+  color: rgba(178, 110, 247, 0.8);
+}
+
+.dayNightBar {
+  position: relative;
+  height: 48px;
+  background: linear-gradient(to right, rgba(10, 10, 35, 0.7), rgba(20, 20, 50, 0.7));
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dayPeriod {
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 167, 20, 0.4), rgba(255, 215, 30, 0.6));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(255, 200, 0, 0.3);
+  border-radius: 10px;
+}
+
+.dayIcon {
+  font-size: 1.75rem;
+  color: rgba(255, 200, 0, 0.9);
+  filter: drop-shadow(0 0 12px rgba(255, 200, 0, 0.4));
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+}
+
+.timeInputCard {
+  background: rgba(15, 15, 30, 0.5);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(138, 43, 226, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.timeInputHeader {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(138, 43, 226, 0.15);
+  padding-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.headerValue {
+  font-size: 0.85rem;
+  color: #b26ef7;
+  background: rgba(138, 43, 226, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.headerIcon {
+  font-size: 1.25rem;
+  color: rgba(178, 110, 247, 0.9);
+}
+
+.timeInputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeInputs {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.timeInputDivider {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.timeInput {
+  flex: 1;
+  max-width: calc(50% - 1rem);
+  position: relative;
+}
+
+.timeInput input[type="number"] {
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono, monospace);
+  font-size: 1rem;
+}
+
+.timeInput input[type="number"]::-webkit-inner-spin-button,
+.timeInput input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.timeInput input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.helperText {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+/* 血月设置样式 */
+.bloodMoonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  margin-top: 1rem;
+}
+
+.bloodMoonInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background: linear-gradient(to bottom right, rgba(139, 0, 0, 0.15), rgba(120, 0, 0, 0.1));
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  box-shadow: 0 5px 15px rgba(139, 0, 0, 0.15);
+}
+
+.bloodMoonDesc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.65;
+}
+
+.bloodMoonDesc p {
+  margin: 0;
+}
+
+.bloodMoonRange {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.95);
+  padding: 0.75rem;
+  background: rgba(139, 0, 0, 0.25);
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid rgba(255, 0, 0, 0.15);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.bloodMoonRange strong {
+  color: #ff7e7e;
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .formGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .formGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+.sunsetIcon {
+  transform: rotate(180deg);
+} 

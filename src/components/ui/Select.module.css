@@ -1,0 +1,122 @@
+.selectContainer {
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.3px;
+}
+
+.selectWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  padding-right: 2.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(15, 15, 20, 0.6);
+  background-clip: padding-box;
+  border: 1px solid rgba(80, 80, 150, 0.3);
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.select:focus {
+  outline: none;
+  border-color: #9d4edd;
+  box-shadow: 0 0 0 2px rgba(138, 43, 226, 0.2), 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: rgba(20, 20, 30, 0.9);
+}
+
+.select:hover:not(:focus) {
+  border-color: rgba(138, 43, 226, 0.5);
+  background-color: rgba(20, 20, 30, 0.7);
+}
+
+.arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.select:focus + .arrow {
+  color: rgba(157, 77, 221, 0.9);
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.helperText {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+}
+
+.select:focus ~ .helperText {
+  color: rgba(138, 43, 226, 0.9);
+}
+
+.error {
+  border-color: rgba(229, 57, 53, 0.5);
+  background-color: rgba(229, 57, 53, 0.05);
+}
+
+.error:focus {
+  box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.2);
+  border-color: rgba(229, 57, 53, 0.7);
+}
+
+.errorText {
+  color: rgb(229, 57, 53);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* 给选项添加样式 */
+.select option {
+  background-color: rgba(25, 25, 35, 0.95);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 12px;
+  font-size: 0.95rem;
+}
+
+/* 暗黑模式适配 */
+@media (prefers-color-scheme: dark) {
+  .select {
+    background-color: rgba(30, 30, 30, 0.7);
+    border-color: rgba(60, 60, 60, 0.8);
+    color: rgba(255, 255, 255, 0.95);
+  }
+  
+  .select:focus {
+    background-color: rgba(40, 40, 40, 0.9);
+  }
+  
+  .label {
+    color: rgba(255, 255, 255, 0.8);
+  }
+} 

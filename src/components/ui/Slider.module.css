@@ -1,0 +1,189 @@
+.sliderContainer {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.labelContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.3px;
+}
+
+.value {
+  font-size: 0.875rem;
+  color: #9d4edd;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  background-color: rgba(138, 43, 226, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  min-width: 3rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sliderWrapper {
+  position: relative;
+  height: 8px;
+  background-color: rgba(30, 30, 40, 0.5);
+  border-radius: 4px;
+  margin: 1.25rem 0.25rem;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.progress {
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(to right, #8a2be2, #9d4edd);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.slider {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 36px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+  transform: translateY(-50%);
+}
+
+.sliderThumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9d4edd, #8a2be2);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  z-index: 1;
+  transition: transform 0.1s ease;
+}
+
+.sliderContainer:hover .sliderThumb {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.tickMarks {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-top: -4px;
+  padding: 0 10px;
+}
+
+.tick {
+  position: relative;
+  width: 1px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.tick::after {
+  content: attr(data-value);
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+}
+
+.helperText {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .sliderContainer {
+    margin-bottom: 1.25rem;
+  }
+  
+  .labelContainer {
+    margin-bottom: 0.5rem;
+  }
+  
+  .label {
+    font-size: 0.8125rem;
+  }
+  
+  .value {
+    font-size: 0.8125rem;
+    padding: 0.2rem 0.4rem;
+    min-width: 2.5rem;
+  }
+  
+  .sliderWrapper {
+    margin: 1rem 0.25rem;
+  }
+  
+  .helperText {
+    margin-top: 0.75rem;
+    font-size: 0.7rem;
+  }
+  
+  .sliderThumb {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .labelContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .sliderWrapper {
+    margin: 0.75rem 0.25rem;
+  }
+  
+  .tickMarks {
+    display: none;
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .sliderWrapper {
+    height: 10px; /* 在移动设备上稍微加大高度，便于触控 */
+  }
+  
+  .sliderThumb {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .labelContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+} 

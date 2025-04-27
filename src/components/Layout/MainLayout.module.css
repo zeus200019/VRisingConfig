@@ -1,0 +1,364 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background-color: transparent;
+  --sidebar-width: 250px;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(10, 10, 15, 0.95);
+  border-right: 1px solid rgba(138, 43, 226, 0.2);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease, left 0.3s ease;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.sidebarHeader {
+  padding: 1.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(138, 43, 226, 0.15);
+}
+
+.sidebarTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #fff;
+  font-weight: 600;
+  background: linear-gradient(to right, #9d4edd, #c77dff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.toggleButton {
+  min-width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(138, 43, 226, 0.1);
+  border: 1px solid rgba(138, 43, 226, 0.2);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.toggleButton:hover {
+  background-color: rgba(138, 43, 226, 0.2);
+  border-color: rgba(138, 43, 226, 0.5);
+  color: #fff;
+}
+
+/* 导航列表 */
+.navigation {
+  flex: 1;
+  padding: 1.5rem 0;
+  overflow-y: auto;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navItem {
+  margin-bottom: 0.25rem;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  text-align: left;
+  background-color: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  border-left: 3px solid transparent;
+}
+
+.navLink:hover {
+  background-color: rgba(138, 43, 226, 0.15);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.navLink.active {
+  background-color: rgba(138, 43, 226, 0.25);
+  color: #fff;
+  border-left-color: #9d4edd;
+}
+
+.navIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  width: 24px;
+  height: 24px;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.sidebar.collapsed .navIcon {
+  margin-right: 0;
+}
+
+.navLabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.sidebar.collapsed .navLabel {
+  display: none;
+}
+
+.sidebarFooter {
+  padding: 1rem;
+  border-top: 1px solid rgba(138, 43, 226, 0.15);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+}
+
+.footerText {
+  margin: 0;
+}
+
+/* 内容区域样式 */
+.content {
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width));
+  transition: margin-left 0.3s ease, width 0.3s ease;
+  position: relative;
+}
+
+.sidebar.collapsed ~ .content {
+  margin-left: 60px;
+  width: calc(100% - 60px);
+}
+
+
+.title {
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0 0 0.5rem;
+  background: linear-gradient(to right, #9d4edd, #c77dff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+.description {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.main {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.contentContainer {
+  width: 100%;
+  max-width: 1400px;
+}
+
+.footer {
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.footerContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.footerContent p {
+  margin: 0;
+}
+
+.disclaimerLink {
+  margin-top: 0;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 4px 12px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  letter-spacing: -0.2px;
+}
+
+.disclaimerLink:hover {
+  color: rgba(157, 78, 221, 1);
+  background-color: rgba(157, 78, 221, 0.1);
+}
+
+/* 移动设备侧边栏控制 */
+.mobileToggle {
+  display: none;
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 1024px) {
+  .main {
+    padding: 1.5rem;
+  }
+  
+  .sidebar {
+    width: 220px;
+  }
+  
+  .content {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+  }
+  
+  .sidebar.collapsed ~ .content {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .sidebar {
+    left: -220px;
+    width: 220px;
+    z-index: 1000;
+  }
+  
+  .sidebar.collapsed {
+    left: -60px;
+    width: 60px;
+  }
+  
+  .sidebar.expanded {
+    left: 0;
+  }
+  
+  .content {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .sidebar.collapsed ~ .content,
+  .sidebar.expanded ~ .content {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .mobileToggle {
+    display: block;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 1001;
+    width: 36px;
+    height: 36px;
+    background-color: rgba(138, 43, 226, 0.8);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  .mobileToggle:hover {
+    background-color: rgba(138, 43, 226, 1);
+  }
+  
+  .header {
+    padding: 1.5rem 1rem;
+    padding-top: 65px; /* 给移动菜单按钮留出空间 */
+  }
+  
+  .main {
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .description {
+    font-size: 0.875rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .main {
+    padding: 1rem 0.75rem;
+  }
+  
+  .contentContainer {
+    padding: 0;
+  }
+  
+  .header {
+    padding: 1.25rem 0.75rem;
+    padding-top: 60px;
+  }
+  
+  .title {
+    font-size: 1.25rem;
+  }
+  
+  .description {
+    font-size: 0.75rem;
+  }
+} 
