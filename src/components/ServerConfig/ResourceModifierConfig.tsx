@@ -11,12 +11,16 @@ const ResourceModifierConfig: React.FC = () => {
 
   // 处理滑块变化
   const handleSliderChange = (key: string) => (value: number) => {
-    updateConfig(`Settings.${key}`, value);
+    // 对值进行舍入处理，解决浮点数精度问题
+    const roundedValue = Math.round(value * 100) / 100;
+    updateConfig(`Settings.${key}`, roundedValue);
   };
 
   // 处理商人滑块变化
   const handleTraderSliderChange = (key: string) => (value: number) => {
-    updateConfig(`Settings.TraderModifiers.${key}`, value);
+    // 对值进行舍入处理，解决浮点数精度问题
+    const roundedValue = Math.round(value * 100) / 100;
+    updateConfig(`Settings.TraderModifiers.${key}`, roundedValue);
   };
 
   // 格式化倍率显示
@@ -45,9 +49,13 @@ const ResourceModifierConfig: React.FC = () => {
             label="物品堆叠倍率"
             min={0.25}
             max={3}
-            step={0.1}
+            step={0.05}
             value={config.Settings.InventoryStacksModifier}
-            onChange={handleSliderChange('InventoryStacksModifier')}
+            onChange={(value) => {
+              // 特殊处理最大值情况
+              const finalValue = value >= 2.95 ? 3 : Math.round(value * 100) / 100;
+              updateConfig('Settings.InventoryStacksModifier', finalValue);
+            }}
             valueFormat={formatMultiplier}
             helperText="提高可在单个栏位堆叠的物品数量"
             showTicks
@@ -57,9 +65,13 @@ const ResourceModifierConfig: React.FC = () => {
             label="普通掉落倍率"
             min={0.25}
             max={3}
-            step={0.1}
+            step={0.05}
             value={config.Settings.DropTableModifier_General}
-            onChange={handleSliderChange('DropTableModifier_General')}
+            onChange={(value) => {
+              // 特殊处理最大值情况
+              const finalValue = value >= 2.95 ? 3 : Math.round(value * 100) / 100;
+              updateConfig('Settings.DropTableModifier_General', finalValue);
+            }}
             valueFormat={formatMultiplier}
             helperText="增加普通怪物的战利品数量"
             showTicks
@@ -69,11 +81,15 @@ const ResourceModifierConfig: React.FC = () => {
             label="仆从猎杀资源倍率"
             min={0.25}
             max={3}
-            step={0.1}
+            step={0.05}
             value={config.Settings.DropTableModifier_Missions}
-            onChange={handleSliderChange('DropTableModifier_Missions')}
+            onChange={(value) => {
+              // 特殊处理最大值情况
+              const finalValue = value >= 2.95 ? 3 : Math.round(value * 100) / 100;
+              updateConfig('Settings.DropTableModifier_Missions', finalValue);
+            }}
             valueFormat={formatMultiplier}
-            helperText="增加仆从猎杀资源产出倍率"
+            helperText="增加仆从猎杀资源产出倍率（解锁黑暗王座后可以叫你的仆从出去打工）"
             showTicks
           />
           
@@ -81,9 +97,13 @@ const ResourceModifierConfig: React.FC = () => {
             label="全局材料资源产出倍率"
             min={0.25}
             max={3}
-            step={0.1}
+            step={0.05}
             value={config.Settings.MaterialYieldModifier_Global}
-            onChange={handleSliderChange('MaterialYieldModifier_Global')}
+            onChange={(value) => {
+              // 特殊处理最大值情况
+              const finalValue = value >= 2.95 ? 3 : Math.round(value * 100) / 100;
+              updateConfig('Settings.MaterialYieldModifier_Global', finalValue);
+            }}
             valueFormat={formatMultiplier}
             helperText="提高所有材料资源的采集产出效率"
             showTicks
@@ -93,9 +113,13 @@ const ResourceModifierConfig: React.FC = () => {
             label="血液精华产出倍率"
             min={0.25}
             max={3}
-            step={0.1}
+            step={0.05}
             value={config.Settings.BloodEssenceYieldModifier}
-            onChange={handleSliderChange('BloodEssenceYieldModifier')}
+            onChange={(value) => {
+              // 特殊处理最大值情况
+              const finalValue = value >= 2.95 ? 3 : Math.round(value * 100) / 100;
+              updateConfig('Settings.BloodEssenceYieldModifier', finalValue);
+            }}
             valueFormat={formatMultiplier}
             helperText="增加血液精华的获取量"
             showTicks
@@ -110,14 +134,14 @@ const ResourceModifierConfig: React.FC = () => {
         </h4>
         <div className={styles.sliderGrid}>
           <Slider
-            label="玩家血液消耗倍率"
+            label="玩家血型消耗倍率"
             min={0}
             max={3}
             step={0.1}
             value={config.Settings.BloodDrainModifier}
             onChange={handleSliderChange('BloodDrainModifier')}
             valueFormat={formatMultiplier}
-            helperText="调整玩家血液资源的消耗速率（玩家血型会随时间减少）"
+            helperText="调整玩家血型资源的消耗速率（血型会随时间减少，不同血型可以提供不同加成）"
             showTicks
           />
           
@@ -169,7 +193,7 @@ const ResourceModifierConfig: React.FC = () => {
             label="商人库存倍率"
             min={0.25}
             max={10}
-            step={0.1}
+            step={0.05}
             value={traderModifiers.StockModifier}
             onChange={handleTraderSliderChange('StockModifier')}
             valueFormat={formatMultiplier}
@@ -181,7 +205,7 @@ const ResourceModifierConfig: React.FC = () => {
             label="商人价格倍率"
             min={0.25}
             max={10}
-            step={0.1}
+            step={0.05}
             value={traderModifiers.PriceModifier}
             onChange={handleTraderSliderChange('PriceModifier')}
             valueFormat={formatMultiplier}
@@ -193,7 +217,7 @@ const ResourceModifierConfig: React.FC = () => {
             label="商人补货计时器倍率"
             min={0.25}
             max={10}
-            step={0.1}
+            step={0.05}
             value={traderModifiers.RestockTimerModifier}
             onChange={handleTraderSliderChange('RestockTimerModifier')}
             valueFormat={formatMultiplier}
@@ -284,7 +308,7 @@ const ResourceModifierConfig: React.FC = () => {
                 label="制作速度倍率"
                 min={0.25}
                 max={6}
-                step={0.1}
+                step={0.05}
                 value={config.Settings.CraftRateModifier}
                 onChange={handleSliderChange('CraftRateModifier')}
                 valueFormat={formatMultiplier}
@@ -296,7 +320,7 @@ const ResourceModifierConfig: React.FC = () => {
                 label="精炼速度倍率"
                 min={0.25}
                 max={6}
-                step={0.1}
+                step={0.05}
                 value={config.Settings.RefinementRateModifier}
                 onChange={handleSliderChange('RefinementRateModifier')}
                 valueFormat={formatMultiplier}
@@ -308,7 +332,7 @@ const ResourceModifierConfig: React.FC = () => {
                 label="研究时间倍率"
                 min={0}
                 max={6}
-                step={0.1}
+                step={0.05}
                 value={config.Settings.ResearchTimeModifier}
                 onChange={handleSliderChange('ResearchTimeModifier')}
                 valueFormat={formatMultiplier}
@@ -320,7 +344,7 @@ const ResourceModifierConfig: React.FC = () => {
                 label="仆从转化速度倍率"
                 min={0.25}
                 max={6}
-                step={0.1}
+                step={0.05}
                 value={config.Settings.ServantConvertRateModifier}
                 onChange={handleSliderChange('ServantConvertRateModifier')}
                 valueFormat={formatMultiplier}

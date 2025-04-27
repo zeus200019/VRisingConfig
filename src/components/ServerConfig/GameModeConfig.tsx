@@ -126,7 +126,7 @@ const GameModeConfig: React.FC = () => {
               label="携带绑定物品可使用传送阵"
               checked={config.Settings.TeleportBoundItems}
               onChange={handleCheckboxChange('TeleportBoundItems')}
-              helperText="带着绑定物品是否可以传送"
+              helperText="带着绑定物品是否可以传送，开启可以提升便捷度，不开启可以提高游戏沉浸度并可能路遇惊喜"
             />
             
             <Checkbox
