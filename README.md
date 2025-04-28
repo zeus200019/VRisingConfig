@@ -1,5 +1,7 @@
 # V Rising 服务器配置工具
 
+中文 | [EN](public/EN_README.md)
+
 ![版本](https://img.shields.io/badge/版本-0.1.0-blueviolet)
 ![Next.js](https://img.shields.io/badge/Next.js-15.2.2-black)
 ![React](https://img.shields.io/badge/React-19.0.0-blue)
