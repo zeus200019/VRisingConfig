@@ -42,12 +42,15 @@ export interface ServerConfig {
     InactivityKillSafeTimeAddition: number;
     InactivityKillTimerMaxItemLevel: number;
     StartingProgressionLevel: number;
+    WeaponSlots: number;
     DisableDisconnectedDeadEnabled: boolean;
     DisableDisconnectedDeadTimer: number;
     DisconnectedSunImmunityTime: number;
     InventoryStacksModifier: number;
     DropTableModifier_General: number;
     DropTableModifier_Missions: number;
+    DropTableModifier_StygianShards: number;
+    SoulShard_DurabilityLossRate: number;
     MaterialYieldModifier_Global: number;
     BloodEssenceYieldModifier: number;
     JournalVBloodSourceUnitMaxDistance: number;
@@ -159,9 +162,12 @@ export interface ServerConfig {
           HeightLimit: number;
         };
       };
+      CastleHeartLimitType: number;
       CastleLimit: number;
       NetherGateLimit: number;
       ThroneOfDarknessLimit: number;
+      ArenaStationLimit: number;
+      RoutingStationLimit: number;
     };
     PlayerInteractionSettings: {
       TimeZone: number;
@@ -272,12 +278,15 @@ const emptyConfig: ServerConfig = {
     InactivityKillSafeTimeAddition: 172800,
     InactivityKillTimerMaxItemLevel: 84,
     StartingProgressionLevel: 0,
+    WeaponSlots: 8,
     DisableDisconnectedDeadEnabled: true,
     DisableDisconnectedDeadTimer: 60,
     DisconnectedSunImmunityTime: 300.0,
     InventoryStacksModifier: 3.0,
     DropTableModifier_General: 3.0,
     DropTableModifier_Missions: 3.0,
+    DropTableModifier_StygianShards: 1.0,
+    SoulShard_DurabilityLossRate: 1.0,
     MaterialYieldModifier_Global: 3.0,
     BloodEssenceYieldModifier: 3.0,
     JournalVBloodSourceUnitMaxDistance: 25.0,
@@ -389,9 +398,12 @@ const emptyConfig: ServerConfig = {
           HeightLimit: 20
         }
       },
+      CastleHeartLimitType: 0,
       CastleLimit: 20,
       NetherGateLimit: 4,
-      ThroneOfDarknessLimit: 4
+      ThroneOfDarknessLimit: 4,
+      ArenaStationLimit: 5,
+      RoutingStationLimit: 10
     },
     PlayerInteractionSettings: {
       TimeZone: 0,

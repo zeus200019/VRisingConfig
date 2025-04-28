@@ -29,6 +29,48 @@
   min-width: 3rem;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.editable {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid transparent;
+}
+
+.editable:hover {
+  background-color: rgba(138, 43, 226, 0.2);
+  border-color: rgba(138, 43, 226, 0.3);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.editable:active {
+  transform: translateY(1px);
+}
+
+.valueInput {
+  font-size: 0.875rem;
+  color: #9d4edd;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  background-color: rgba(30, 30, 40, 0.8);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  min-width: 3rem;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #9d4edd;
+  outline: none;
+  width: auto;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.valueInput:focus {
+  border-color: #c77dff;
+  box-shadow: 0 0 0 2px rgba(157, 78, 221, 0.25);
 }
 
 .sliderWrapper {
@@ -131,7 +173,7 @@
     font-size: 0.8125rem;
   }
   
-  .value {
+  .value, .valueInput {
     font-size: 0.8125rem;
     padding: 0.2rem 0.4rem;
     min-width: 2.5rem;

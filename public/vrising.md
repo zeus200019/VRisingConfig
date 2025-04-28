@@ -1,6 +1,6 @@
 {
-  "Name": "残酷模式",
-  "Description": "",
+  "Name": "V1.1残酷模式",
+  "Description": "V1.1残酷模式",
   "Settings": {
     "GameDifficulty": 2,
     "GameModeType": 1,
@@ -27,12 +27,15 @@
     "InactivityKillSafeTimeAddition": 172800,
     "InactivityKillTimerMaxItemLevel": 84,
     "StartingProgressionLevel": 0,
+    "WeaponSlots": 8,
     "DisableDisconnectedDeadEnabled": true,
     "DisableDisconnectedDeadTimer": 60,
     "DisconnectedSunImmunityTime": 300.0,
     "InventoryStacksModifier": 1.0,
     "DropTableModifier_General": 1.25,
     "DropTableModifier_Missions": 1.0,
+    "DropTableModifier_StygianShards": 1.0,
+    "SoulShard_DurabilityLossRate": 1.0,
     "MaterialYieldModifier_Global": 1.0,
     "BloodEssenceYieldModifier": 1.0,
     "JournalVBloodSourceUnitMaxDistance": 25.0,
@@ -116,21 +119,21 @@
       "EyeStructuresLimit": 1,
       "TombLimit": 12,
       "VerminNestLimit": 4,
-      "PrisonCellLimit": 16,
+      "PrisonCellLimit": 24,
       "HeartLimits": {
         "Level1": {
           "FloorLimit": 50,
-          "ServantLimit": 4,
+          "ServantLimit": 1,
           "HeightLimit": 3
         },
         "Level2": {
           "FloorLimit": 140,
-          "ServantLimit": 5,
+          "ServantLimit": 3,
           "HeightLimit": 3
         },
         "Level3": {
           "FloorLimit": 240,
-          "ServantLimit": 6,
+          "ServantLimit": 5,
           "HeightLimit": 3
         },
         "Level4": {
@@ -144,9 +147,12 @@
           "HeightLimit": 3
         }
       },
+      "CastleHeartLimitType": 0,
       "CastleLimit": 2,
       "NetherGateLimit": 1,
-      "ThroneOfDarknessLimit": 1
+      "ThroneOfDarknessLimit": 1,
+      "ArenaStationLimit": 5,
+      "RoutingStationLimit": 10
     },
     "PlayerInteractionSettings": {
       "TimeZone": 0,

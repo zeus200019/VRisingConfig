@@ -48,7 +48,7 @@ const CombatConfig: React.FC = () => {
             label="最大生命值倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.VampireStatModifiers.MaxHealthModifier}
             onChange={handleVampireStatChange('MaxHealthModifier')}
             valueFormat={formatMultiplier}
@@ -60,7 +60,7 @@ const CombatConfig: React.FC = () => {
             label="物理力量倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.VampireStatModifiers.PhysicalPowerModifier}
             onChange={handleVampireStatChange('PhysicalPowerModifier')}
             valueFormat={formatMultiplier}
@@ -72,7 +72,7 @@ const CombatConfig: React.FC = () => {
             label="法术力量倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.VampireStatModifiers.SpellPowerModifier}
             onChange={handleVampireStatChange('SpellPowerModifier')}
             valueFormat={formatMultiplier}
@@ -84,7 +84,7 @@ const CombatConfig: React.FC = () => {
             label="资源攻击力倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.VampireStatModifiers.ResourcePowerModifier}
             onChange={handleVampireStatChange('ResourcePowerModifier')}
             valueFormat={formatMultiplier}
@@ -96,7 +96,7 @@ const CombatConfig: React.FC = () => {
             label="攻城力量倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.VampireStatModifiers.SiegePowerModifier}
             onChange={handleVampireStatChange('SiegePowerModifier')}
             valueFormat={formatMultiplier}
@@ -108,11 +108,23 @@ const CombatConfig: React.FC = () => {
             label="受到伤害倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.VampireStatModifiers.DamageReceivedModifier}
             onChange={handleVampireStatChange('DamageReceivedModifier')}
             valueFormat={formatMultiplier}
             helperText="调整玩家受到的伤害，值越大伤害越高"
+            showTicks
+          />
+          
+          <Slider
+            label="武器槽位数量"
+            min={1}
+            max={8}
+            step={1}
+            value={config.Settings.WeaponSlots}
+            onChange={(value) => updateConfig('Settings.WeaponSlots', value)}
+            valueFormat={(value) => `${value}个`}
+            helperText="玩家可装备的武器槽位数量（1-8）"
             showTicks
           />
         </div>
@@ -128,7 +140,7 @@ const CombatConfig: React.FC = () => {
             label="最大生命值倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.EquipmentStatModifiers_Global.MaxHealthModifier}
             onChange={handleEquipmentStatChange('MaxHealthModifier')}
             valueFormat={formatMultiplier}
@@ -140,7 +152,7 @@ const CombatConfig: React.FC = () => {
             label="资源产出倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.EquipmentStatModifiers_Global.ResourceYieldModifier}
             onChange={handleEquipmentStatChange('ResourceYieldModifier')}
             valueFormat={formatMultiplier}
@@ -152,7 +164,7 @@ const CombatConfig: React.FC = () => {
             label="物理力量倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.EquipmentStatModifiers_Global.PhysicalPowerModifier}
             onChange={handleEquipmentStatChange('PhysicalPowerModifier')}
             valueFormat={formatMultiplier}
@@ -164,7 +176,7 @@ const CombatConfig: React.FC = () => {
             label="法术力量倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.EquipmentStatModifiers_Global.SpellPowerModifier}
             onChange={handleEquipmentStatChange('SpellPowerModifier')}
             valueFormat={formatMultiplier}
@@ -176,7 +188,7 @@ const CombatConfig: React.FC = () => {
             label="攻城力量倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.EquipmentStatModifiers_Global.SiegePowerModifier}
             onChange={handleEquipmentStatChange('SiegePowerModifier')}
             valueFormat={formatMultiplier}
@@ -188,7 +200,7 @@ const CombatConfig: React.FC = () => {
             label="移动速度倍率"
             min={0.01}
             max={10}
-            step={0.1}
+            step={0.01}
             value={config.Settings.EquipmentStatModifiers_Global.MovementSpeedModifier}
             onChange={handleEquipmentStatChange('MovementSpeedModifier')}
             valueFormat={formatMultiplier}
@@ -215,7 +227,7 @@ const CombatConfig: React.FC = () => {
                 label="最大生命值倍率"
                 min={0.01}
                 max={10}
-                step={0.1}
+                step={0.01}
                 value={config.Settings.UnitStatModifiers_Global.MaxHealthModifier}
                 onChange={handleUnitStatChange('Global')('MaxHealthModifier')}
                 valueFormat={formatMultiplier}
@@ -227,7 +239,7 @@ const CombatConfig: React.FC = () => {
                 label="力量倍率"
                 min={0.01}
                 max={10}
-                step={0.1}
+                step={0.01}
                 value={config.Settings.UnitStatModifiers_Global.PowerModifier}
                 onChange={handleUnitStatChange('Global')('PowerModifier')}
                 valueFormat={formatMultiplier}
@@ -259,7 +271,7 @@ const CombatConfig: React.FC = () => {
                 label="最大生命值倍率"
                 min={0.01}
                 max={10}
-                step={0.1}
+                step={0.01}
                 value={config.Settings.UnitStatModifiers_VBlood.MaxHealthModifier}
                 onChange={handleUnitStatChange('VBlood')('MaxHealthModifier')}
                 valueFormat={formatMultiplier}
@@ -271,7 +283,7 @@ const CombatConfig: React.FC = () => {
                 label="力量倍率"
                 min={0.01}
                 max={10}
-                step={0.1}
+                step={0.01}
                 value={config.Settings.UnitStatModifiers_VBlood.PowerModifier}
                 onChange={handleUnitStatChange('VBlood')('PowerModifier')}
                 valueFormat={formatMultiplier}

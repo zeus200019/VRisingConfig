@@ -33,10 +33,15 @@ const Slider: React.FC<SliderProps> = ({
   fullWidth = false,
 }) => {
   const [innerValue, setInnerValue] = useState<number>(value);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>('');
+  const [valueWidth, setValueWidth] = useState<number | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
   const rangeRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const valueRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     setInnerValue(value);
@@ -68,6 +73,80 @@ const Slider: React.FC<SliderProps> = ({
     return val.toString();
   };
   
+  // 开始编辑值
+  const handleValueClick = () => {
+    // 获取显示值元素的宽度
+    if (valueRef.current) {
+      const rect = valueRef.current.getBoundingClientRect();
+      setValueWidth(rect.width);
+    }
+    
+    setIsEditing(true);
+    setInputValue(innerValue.toString());
+    
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+        inputRef.current.select();
+      }
+    }, 0);
+  };
+
+  // 处理输入更改
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  // 处理失焦和按回车
+  const handleInputBlur = () => {
+    commitInput();
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      commitInput();
+    } else if (e.key === 'Escape') {
+      setIsEditing(false);
+    }
+  };
+
+  // 提交输入值
+  const commitInput = () => {
+    let newValue: number;
+
+    // 尝试解析输入值
+    try {
+      newValue = parseFloat(inputValue);
+
+      // 处理NaN或非数字
+      if (isNaN(newValue)) {
+        newValue = innerValue;
+      }
+
+      // 确保值在有效范围内
+      newValue = Math.max(min, Math.min(max, newValue));
+
+      // 应用步长
+      if (step !== 0) {
+        // 将值四舍五入到最接近的步长
+        const steps = Math.round((newValue - min) / step);
+        newValue = min + steps * step;
+        // 处理浮点数精度问题
+        newValue = parseFloat(newValue.toFixed(10));
+      }
+
+      // 更新值并触发onChange
+      setInnerValue(newValue);
+      onChange(newValue);
+    } catch (error) {
+      // 如果解析失败，保持原值
+      console.error("Invalid input:", error);
+    }
+
+    setIsEditing(false);
+    setValueWidth(null);
+  };
+  
   // 生成刻度标记
   const renderTicks = () => {
     if (!showTicks) return null;
@@ -93,12 +172,38 @@ const Slider: React.FC<SliderProps> = ({
     return <div className={styles.tickMarks}>{ticks}</div>;
   };
 
+  // 创建输入框样式，确保宽度与原始值显示匹配
+  const inputStyle = valueWidth ? { width: `${valueWidth}px` } : {};
+
   return (
     <div className={`${styles.sliderContainer} ${fullWidth ? styles.fullWidth : ''}`}>
       {label && (
         <div className={styles.labelContainer}>
           <label className={styles.label}>{label}</label>
-          {showValue && <span className={styles.value}>{formatValue(innerValue)}</span>}
+          {showValue && (
+            isEditing ? (
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                onKeyDown={handleInputKeyDown}
+                className={styles.valueInput}
+                style={inputStyle}
+                autoFocus
+              />
+            ) : (
+              <span 
+                ref={valueRef}
+                className={`${styles.value} ${styles.editable}`} 
+                onClick={handleValueClick}
+                title="点击编辑值"
+              >
+                {formatValue(innerValue)}
+              </span>
+            )
+          )}
         </div>
       )}
       

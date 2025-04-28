@@ -5,6 +5,7 @@ import styles from './CastleConfig.module.css';
 import Card from '../ui/Card';
 import Slider from '../ui/Slider';
 import Checkbox from '../ui/Checkbox';
+import Select from '../ui/Select';
 import { useServerConfig } from '../../contexts/ServerConfigContext';
 
 const CastleConfig: React.FC = () => {
@@ -38,6 +39,12 @@ const CastleConfig: React.FC = () => {
     return icons[level - 1] || level.toString();
   };
 
+  // 城堡心脏限制类型选项
+  const castleHeartLimitTypeOptions = [
+    { value: 0, label: '按玩家限制' },
+    { value: 1, label: '按血族限制' }
+  ];
+
   return (
     <Card 
       title="城堡设置" 
@@ -50,6 +57,16 @@ const CastleConfig: React.FC = () => {
           <span>城堡全局限制</span>
         </h4>
         <div className={styles.formGrid}>
+          <div className={styles.selectItem}>
+            <Select
+              label="城堡之心上限类型"
+              options={castleHeartLimitTypeOptions}
+              value={config.Settings.CastleStatModifiers_Global.CastleHeartLimitType}
+              onChange={(value) => handleCastleStatChange('CastleHeartLimitType')(parseInt(value, 10))}
+              helperText="设置城堡数量限制的计算方式（0按玩家限制，1按血族限制）"
+            />
+          </div>
+          
           <Slider
             label="城堡数量限制"
             min={0}
@@ -135,6 +152,28 @@ const CastleConfig: React.FC = () => {
             value={config.Settings.CastleStatModifiers_Global.NetherGateLimit}
             onChange={handleCastleStatChange('NetherGateLimit')}
             helperText="每个城堡最多可建造的暗影召唤法阵数量（0-255）"
+            showTicks
+          />
+          
+          <Slider
+            label="竞技场站点上限"
+            min={0}
+            max={255}
+            step={1}
+            value={config.Settings.CastleStatModifiers_Global.ArenaStationLimit}
+            onChange={handleCastleStatChange('ArenaStationLimit')}
+            helperText="每个城堡最多可建造的竞技场站点数量（0-255）"
+            showTicks
+          />
+          
+          <Slider
+            label="传送站上限"
+            min={0}
+            max={255}
+            step={1}
+            value={config.Settings.CastleStatModifiers_Global.RoutingStationLimit}
+            onChange={handleCastleStatChange('RoutingStationLimit')}
+            helperText="每个城堡最多可建造的传送站数量（0-255）"
             showTicks
           />
           

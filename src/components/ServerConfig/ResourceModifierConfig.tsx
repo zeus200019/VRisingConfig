@@ -94,6 +94,22 @@ const ResourceModifierConfig: React.FC = () => {
           />
           
           <Slider
+            label="暗影碎片战利品掉落倍率"
+            min={0.25}
+            max={3}
+            step={0.05}
+            value={config.Settings.DropTableModifier_StygianShards}
+            onChange={(value) => {
+              // 特殊处理最大值情况
+              const finalValue = value >= 2.95 ? 3 : Math.round(value * 100) / 100;
+              updateConfig('Settings.DropTableModifier_StygianShards', finalValue);
+            }}
+            valueFormat={formatMultiplier}
+            helperText="增加暗影碎片相关战利品的掉落倍率"
+            showTicks
+          />
+          
+          <Slider
             label="全局材料资源产出倍率"
             min={0.25}
             max={3}
@@ -154,6 +170,21 @@ const ResourceModifierConfig: React.FC = () => {
             onChange={handleSliderChange('DurabilityDrainModifier')}
             valueFormat={formatMultiplier}
             helperText="降低值使装备耐久度消耗更慢"
+            showTicks
+          />
+          
+          <Slider
+            label="灵魂碎片耐久度损失率"
+            min={0}
+            max={2}
+            step={0.1}
+            value={config.Settings.SoulShard_DurabilityLossRate}
+            onChange={(value) => {
+              const finalValue = Math.round(value * 10) / 10;
+              updateConfig('Settings.SoulShard_DurabilityLossRate', finalValue);
+            }}
+            valueFormat={formatMultiplier}
+            helperText="控制灵魂碎片耐久度损失的速率（0表示不损失）"
             showTicks
           />
           

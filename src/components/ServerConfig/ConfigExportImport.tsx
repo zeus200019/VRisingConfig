@@ -238,6 +238,16 @@ const ConfigExportImport: React.FC = () => {
           format: (value) => `${value}x`
         },
         { 
+          path: ['Settings', 'DropTableModifier_StygianShards'], 
+          label: '暗影碎片战利品掉落倍率',
+          format: (value) => `${value}x`
+        },
+        { 
+          path: ['Settings', 'SoulShard_DurabilityLossRate'], 
+          label: '灵魂碎片耐久度损失率',
+          format: (value) => `${value}x`
+        },
+        { 
           path: ['Settings', 'MaterialYieldModifier_Global'], 
           label: '材料产出倍率',
           format: (value) => `${value}x`
@@ -389,6 +399,11 @@ const ConfigExportImport: React.FC = () => {
           format: (value) => `${value}秒`
         },
         { 
+          path: ['Settings', 'WeaponSlots'], 
+          label: '武器槽位数量', 
+          format: (value) => `${value}个`
+        },
+        { 
           path: ['Settings', 'PvPVampireRespawnModifier'], 
           label: 'PvP吸血鬼重生时间倍率',
           format: (value) => `${value}x`
@@ -481,6 +496,17 @@ const ConfigExportImport: React.FC = () => {
       key: 'castle',
       items: [
         { 
+          path: ['Settings', 'CastleStatModifiers_Global', 'CastleHeartLimitType'], 
+          label: '城堡之心上限类型',
+          format: (value) => {
+            const types: Record<number, string> = {
+              0: '按玩家限制',
+              1: '按血族限制'
+            };
+            return types[value as number] || `未知类型(${value})`;
+          }
+        },
+        { 
           path: ['Settings', 'CastleStatModifiers_Global', 'CastleLimit'], 
           label: '城堡数量限制'
         },
@@ -511,6 +537,14 @@ const ConfigExportImport: React.FC = () => {
         { 
           path: ['Settings', 'CastleStatModifiers_Global', 'NetherGateLimit'], 
           label: '暗影召唤法阵上限'
+        },
+        { 
+          path: ['Settings', 'CastleStatModifiers_Global', 'ArenaStationLimit'], 
+          label: '竞技场站点上限'
+        },
+        { 
+          path: ['Settings', 'CastleStatModifiers_Global', 'RoutingStationLimit'], 
+          label: '传送站上限'
         },
         { 
           path: ['Settings', 'CastleStatModifiers_Global', 'TickPeriod'], 
@@ -1316,7 +1350,7 @@ const ConfigExportImport: React.FC = () => {
               <li>选择【<strong>私人游戏</strong>】模式</li>
               <li>点击【<strong>高级游戏设置</strong>】进入配置界面</li>
               <li>调整血族规模（即盟友规模，盟友才能一起建造），其他部分可在本页面进行调整，完成后点击【<strong>保存为新规则</strong>】</li>
-              <li>退出游戏，找到规则文件存储位置：<code>C:\Users\用户名\AppData\LocalLow\Stunlock Studios\VRising\ServerSettingsPresets</code></li>
+              <li>退出游戏，找到规则文件存储位置：<code>C:\Users\用户名\AppData\LocalLow\Stunlock Studios\VRising\Settings\v4\ServerPresets</code></li>
               <li>回到本页面，点击【<strong>导入配置</strong>】按钮选择刚保存的规则文件，一般按照修改时间最新的就是您刚保存的</li>
               <li>在本工具中详细调整服务器参数</li>
               <li>调整完成后点击【<strong>复制配置</strong>】，将内容替换到原规则文件中</li>
@@ -1338,7 +1372,7 @@ const ConfigExportImport: React.FC = () => {
               <li>从存档列表中选择您的游戏存档</li>
               <li>点击【<strong>编辑设置</strong>】按钮</li>
               <li>调整血族规模（即盟友规模，盟友才能一起建造），其他部分可在本页面进行调整，然后点击【<strong>保存为新规则</strong>】</li>
-              <li>退出游戏，找到规则文件存储位置：<code>C:\Users\用户名\AppData\LocalLow\Stunlock Studios\VRising\ServerSettingsPresets</code></li>
+              <li>退出游戏，找到规则文件存储位置：<code>C:\Users\用户名\AppData\LocalLow\Stunlock Studios\VRising\Settings\v4\ServerPresets</code></li>
               <li>回到本页面，点击【<strong>导入配置</strong>】按钮选择刚保存的规则文件</li>
               <li>在本工具中详细调整服务器参数</li>
               <li>调整完成后点击【<strong>复制配置</strong>】，将内容替换到原规则文件中</li>
@@ -1351,7 +1385,7 @@ const ConfigExportImport: React.FC = () => {
             <div className={styles.extraInfoItem}>
               <span className={styles.extraInfoIcon}>📁</span>
               <div>
-                配置文件位置：<code>C:\Users\用户名\AppData\LocalLow\Stunlock Studios\VRising\ServerSettingsPresets</code>
+                配置文件位置：<code>C:\Users\用户名\AppData\LocalLow\Stunlock Studios\VRising\Settings\v4\ServerPresets</code>
                 <div className={styles.helpNote}>找不到AppData文件夹？在资源管理器上方点击&ldquo;查看→显示隐藏文件&rdquo;</div>
               </div>
             </div>
