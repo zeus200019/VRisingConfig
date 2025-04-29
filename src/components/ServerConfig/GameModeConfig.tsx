@@ -19,9 +19,8 @@ const GameModeConfig: React.FC = () => {
 
   // 游戏模式选项
   const gameModeOptions = [
-    { value: 0, label: 'PVP玩家对战模式' },
-    { value: 1, label: 'PVE玩家对环境模式' },
-    { value: 2, label: '无破坏城堡PvP' }
+    { value: 0, label: 'PVE玩家对环境模式' },
+    { value: 1, label: 'PVP玩家对战模式' }
   ];
 
   // 死亡容器权限选项
@@ -123,24 +122,23 @@ const GameModeConfig: React.FC = () => {
           <h5 className={styles.checkboxTitle}>移动与传送限制</h5>
           <div className={styles.checkboxGrid}>
             <Checkbox
-              label="携带绑定物品可使用传送阵"
+              label="禁止携带资源物品使用传送阵"
               checked={config.Settings.TeleportBoundItems}
               onChange={handleCheckboxChange('TeleportBoundItems')}
-              helperText="带着绑定物品是否可以传送，开启可以提升便捷度，不开启可以提高游戏沉浸度并可能路遇惊喜"
+              helperText="开启后玩家不能在携带资源物品时使用传送门，关闭则可以携带资源传送"
             />
-            
             <Checkbox
-              label="携带绑定物品可变为蝙蝠形态"
+              label="禁止携带资源物品变为蝙蝠形态"
               checked={config.Settings.BatBoundItems}
               onChange={handleCheckboxChange('BatBoundItems')}
-              helperText="带着绑定物品是否可变蝙蝠"
+              helperText="开启后玩家不能在携带资源物品时变身蝙蝠，关闭则可以携带资源变身蝙蝠"
             />
             
             <Checkbox
-              label="携带灵魂碎片可变为蝙蝠形态"
+              label="禁止携带灵魂碎片变为蝙蝠形态"
               checked={config.Settings.BatBoundShards}
               onChange={handleCheckboxChange('BatBoundShards')}
-              helperText="带着灵魂碎片是否可变蝙蝠"
+              helperText="开启后玩家不能在携带灵魂碎片时变身蝙蝠，关闭则可以携带灵魂碎片变身蝙蝠"
             />
           </div>
         </div>

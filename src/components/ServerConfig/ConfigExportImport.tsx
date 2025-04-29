@@ -95,9 +95,8 @@ const ConfigExportImport: React.FC = () => {
           label: '游戏模式', 
           format: (value) => {
             const modes: Record<number, string> = {
-              0: 'PvP玩家对战模式',
-              1: 'PvE玩家对环境模式',
-              2: '无破坏城堡PvP'
+              0: 'PvE玩家对环境模式',
+              1: 'PvP玩家对战模式'
             };
             return modes[value as number] || `未知模式(${value})`;
           }
@@ -145,21 +144,21 @@ const ConfigExportImport: React.FC = () => {
         },
         { 
           path: ['Settings', 'TeleportBoundItems'], 
-          label: '携带绑定物品传送', 
-          valueClass: (value) => value ? 'enabled' : 'disabled',
-          format: (value) => value ? '允许' : '禁止'
+          label: '禁止携带资源物品传送', 
+          valueClass: (value) => value ? 'disabled' : 'enabled',
+          format: (value) => value ? '禁止传送' : '允许传送'
         },
         { 
           path: ['Settings', 'BatBoundItems'], 
-          label: '携带绑定物品变蝙蝠', 
-          valueClass: (value) => value ? 'enabled' : 'disabled',
-          format: (value) => value ? '允许' : '禁止'
+          label: '禁止携带资源物品变蝙蝠', 
+          valueClass: (value) => value ? 'disabled' : 'enabled',
+          format: (value) => value ? '禁止变身' : '允许变身'
         },
         { 
           path: ['Settings', 'BatBoundShards'], 
-          label: '携带灵魂碎片变蝙蝠', 
-          valueClass: (value) => value ? 'enabled' : 'disabled',
-          format: (value) => value ? '允许' : '禁止'
+          label: '禁止携带灵魂碎片变蝙蝠', 
+          valueClass: (value) => value ? 'disabled' : 'enabled',
+          format: (value) => value ? '禁止变身' : '允许变身'
         },
         { 
           path: ['Settings', 'AllowGlobalChat'], 
