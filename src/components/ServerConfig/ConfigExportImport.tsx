@@ -1617,6 +1617,9 @@ const ConfigExportImport: React.FC = () => {
               <span className={styles.stepIcon}>🖥️</span>
               私人服务器配置
             </span>
+            <div className={styles.importWarning}>
+              ⚠️ 重要提示：修改服务器配置前，请先备份您的服务器存档文件！
+            </div>
             <ul className={styles.steps}>
               <li>本工具现已支持导入私人服务器配置文件 (ServerHostSettings.json)，系统会自动识别格式并进行适配</li>
               <li>如果您有私人服务器的配置文件，可以直接点击【<strong>导入配置</strong>】按钮导入</li>
