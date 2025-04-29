@@ -1039,6 +1039,17 @@ const ConfigExportImport: React.FC = () => {
       try {
         const content = e.target?.result as string;
         const parsed = JSON.parse(content);
+        
+        // 基本验证导入的JSON结构
+        if (!parsed || typeof parsed !== 'object') {
+          throw new Error('无效的JSON格式');
+        }
+        
+        // 验证必要的字段是否存在
+        if (!parsed.Name || !parsed.Settings) {
+          throw new Error('JSON缺少必要的配置字段');
+        }
+        
         const serverName = parsed.Name || '未命名服务器';
         
         setImportPreview({
@@ -1049,12 +1060,21 @@ const ConfigExportImport: React.FC = () => {
         setShowImport(true);
       } catch (error) {
         console.error('解析JSON文件失败:', error);
-        alert('无法解析选择的文件，请确保它是有效的V Rising服务器配置JSON文件。');
+        alert('无法解析选择的文件，正确的规则文件位置请查看使用说明。目前暂不支持独立服务器的配置导入。');
+        
+        // 重置文件输入
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
       }
     };
 
     reader.onerror = () => {
       alert('读取文件时发生错误，请重试。');
+      // 重置文件输入
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     };
 
     reader.readAsText(file);
@@ -1065,7 +1085,17 @@ const ConfigExportImport: React.FC = () => {
     if (!importPreview) return;
     
     try {
-      importConfig(importPreview.configData);
+      // 清理并再次验证JSON格式
+      const cleanedJson = cleanImportedJson(importPreview.configData);
+      const parsed = JSON.parse(cleanedJson);
+      
+      // 验证必要的结构
+      if (!parsed || typeof parsed !== 'object' || !parsed.Settings) {
+        throw new Error('配置文件格式无效');
+      }
+      
+      // 尝试导入配置
+      importConfig(cleanedJson);
       
       if (successTimerRef.current) {
         clearTimeout(successTimerRef.current);
@@ -1085,7 +1115,16 @@ const ConfigExportImport: React.FC = () => {
       }, 3000);
     } catch (error) {
       console.error('导入失败:', error);
-      alert('导入失败，请检查JSON格式是否正确');
+      alert(`导入失败: ${error instanceof Error ? error.message : '配置格式不兼容'}`);
+      
+      // 重置状态
+      setShowImport(false);
+      setImportPreview(null);
+      
+      // 重置文件输入
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
 
@@ -1182,6 +1221,47 @@ const ConfigExportImport: React.FC = () => {
       resetTimerRef.current = setTimeout(() => {
         setResetSuccess(false);
       }, 3000);
+    }
+  };
+
+  // 在前面添加保护配置的函数
+  useEffect(() => {
+    // 当config发生变化时检查是否为有效状态
+    if (config && typeof config === 'object') {
+      try {
+        exportConfig(); // 尝试调用导出函数测试配置是否正常
+      } catch (error) {
+        console.error('配置状态异常:', error);
+        // 尝试使用localStorage中的备份配置或重置为默认值
+        resetConfig();
+        alert('检测到配置异常，已重置为默认值。');
+      }
+    }
+  }, [config, exportConfig, resetConfig]);
+
+  // 组件初始化时保存默认配置
+  useEffect(() => {
+    try {
+      // 保存当前配置作为临时备份
+      const configBackup = exportConfig();
+      if (configBackup) {
+        localStorage.setItem('vrising_config_backup', configBackup);
+      }
+    } catch (error) {
+      console.error('备份配置失败:', error);
+    }
+  }, []);
+
+  // 特别为有问题的JSON添加清理功能
+  const cleanImportedJson = (jsonStr: string): string => {
+    try {
+      // 通过解析和重新序列化移除可能的非法字符或结构
+      const obj = JSON.parse(jsonStr);
+      return JSON.stringify(obj);
+    } catch (error) {
+      // 如果解析失败，原样返回
+      console.error('清理JSON字符串失败:', error);
+      return jsonStr;
     }
   };
 
