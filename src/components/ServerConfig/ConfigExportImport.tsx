@@ -38,6 +38,7 @@ interface ImportPreview {
   fileName: string;
   serverName: string;
   configData: string;
+  isStandaloneServer?: boolean; // 添加标识是否为私人服务器配置
 }
 
 const ConfigExportImport: React.FC = () => {
@@ -54,6 +55,19 @@ const ConfigExportImport: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(true); // 默认全部展开
   // 导入预览信息
   const [importPreview, setImportPreview] = useState<ImportPreview | null>(null);
+  // 添加是否为私人服务器配置模式的状态
+  const [isStandaloneServerMode, setIsStandaloneServerMode] = useState(false);
+  
+  // 使用useEffect从localStorage中读取模式状态
+  useEffect(() => {
+    // 确保代码只在浏览器端执行
+    if (typeof window !== 'undefined') {
+      const savedMode = localStorage.getItem('vrising_standalone_server_mode');
+      if (savedMode === 'true') {
+        setIsStandaloneServerMode(true);
+      }
+    }
+  }, []);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const copyTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -938,95 +952,6 @@ const ConfigExportImport: React.FC = () => {
     return paths.map(path => getConfigValue(obj, path));
   };
 
-  // 生成配置JSON，并在配置改变时更新
-  useEffect(() => {
-    const configStr = exportConfig();
-    setJsonConfig(configStr);
-    
-    try {
-      const parsed = JSON.parse(configStr);
-      setParsedJson(parsed);
-      
-      // 提取配置摘要
-      const summary: Record<string, any> = {};
-      configCategories.forEach(category => {
-        const items = category.items.map(item => {
-          let paths: string[][] = [];
-          
-          // 区分单个路径和多个路径的情况
-          if (typeof item.path[0] === 'string') {
-            // 单个路径的情况，如：['Settings', 'GameMode']
-            paths = [item.path as string[]];
-          } else if (Array.isArray(item.path[0])) {
-            // 多个路径的情况，如：[['Settings', 'StartHour'], ['Settings', 'StartMinute']]
-            paths = item.path as string[][];
-          }
-          
-          const values = getMultipleConfigValues(parsed, paths);
-          return {
-            ...item,
-            value: paths.length === 1 ? values[0] : values
-          };
-        });
-        summary[category.key] = items;
-      });
-      
-      setConfigSummary(summary);
-    } catch (error) {
-      console.error('解析JSON失败:', error);
-    }
-  }, [config, exportConfig]);
-
-  // 处理复制功能
-  const handleCopy = () => {
-    if (copyTimerRef.current) {
-      clearTimeout(copyTimerRef.current);
-    }
-
-    navigator.clipboard.writeText(jsonConfig).then(() => {
-      setCopySuccess(true);
-      copyTimerRef.current = setTimeout(() => {
-        setCopySuccess(false);
-      }, 2000);
-    }).catch(err => {
-      console.error('复制失败:', err);
-      alert('复制失败，请手动复制');
-    });
-  };
-
-  // 处理下载功能
-  const handleDownload = () => {
-    try {
-      const blob = new Blob([jsonConfig], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      
-      // 创建一个临时的a元素
-      const downloadElement = document.createElement('a');
-      downloadElement.href = url;
-      downloadElement.download = downloadName;
-      
-      // 添加到DOM，触发点击，然后移除
-      document.body.appendChild(downloadElement);
-      downloadElement.click();
-      document.body.removeChild(downloadElement);
-      
-      // 释放URL对象
-      setTimeout(() => {
-        URL.revokeObjectURL(url);
-      }, 100);
-    } catch (error) {
-      console.error('下载失败:', error);
-      alert('下载失败，请尝试手动复制内容并保存');
-    }
-  };
-
-  // 打开文件选择对话框
-  const handleImportClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
   // 处理文件选择
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -1038,7 +963,19 @@ const ConfigExportImport: React.FC = () => {
     reader.onload = (e) => {
       try {
         const content = e.target?.result as string;
-        const parsed = JSON.parse(content);
+        let parsed = JSON.parse(content);
+        let isStandaloneServer = false;
+        
+        // 检测是否为私人服务器配置格式（不包含Name和Settings字段，直接就是Settings内容）
+        if (!parsed.Settings && parsed.GameModeType !== undefined) {
+          // 这可能是私人服务器配置，自动添加外层结构
+          isStandaloneServer = true;
+          parsed = {
+            Name: "导入的私人服务器配置",
+            Description: "从私人服务器配置文件导入的设置",
+            Settings: parsed
+          };
+        }
         
         // 基本验证导入的JSON结构
         if (!parsed || typeof parsed !== 'object') {
@@ -1046,7 +983,7 @@ const ConfigExportImport: React.FC = () => {
         }
         
         // 验证必要的字段是否存在
-        if (!parsed.Name || !parsed.Settings) {
+        if (!parsed.Settings) {
           throw new Error('JSON缺少必要的配置字段');
         }
         
@@ -1055,12 +992,13 @@ const ConfigExportImport: React.FC = () => {
         setImportPreview({
           fileName: file.name,
           serverName: serverName,
-          configData: content
+          configData: JSON.stringify(parsed), // 使用处理后的JSON
+          isStandaloneServer: isStandaloneServer
         });
         setShowImport(true);
       } catch (error) {
         console.error('解析JSON文件失败:', error);
-        alert('无法解析选择的文件，正确的规则文件位置请查看使用说明。目前暂不支持独立服务器的配置导入。');
+        alert('无法解析选择的文件，请确保是有效的V Rising配置文件。');
         
         // 重置文件输入
         if (fileInputRef.current) {
@@ -1092,6 +1030,15 @@ const ConfigExportImport: React.FC = () => {
       // 验证必要的结构
       if (!parsed || typeof parsed !== 'object' || !parsed.Settings) {
         throw new Error('配置文件格式无效');
+      }
+      
+      // 记录是否为私人服务器模式并保存到localStorage
+      const newMode = !!importPreview.isStandaloneServer;
+      setIsStandaloneServerMode(newMode);
+      
+      // 确保在浏览器环境中执行
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('vrising_standalone_server_mode', newMode.toString());
       }
       
       // 尝试导入配置
@@ -1128,6 +1075,142 @@ const ConfigExportImport: React.FC = () => {
     }
   };
 
+  // 获取配置JSON - 根据模式返回不同的格式
+  const getConfigJson = (): string => {
+    try {
+      const fullConfig = exportConfig();
+      
+      // 如果是私人服务器模式，则只返回Settings内容
+      if (isStandaloneServerMode) {
+        const parsed = JSON.parse(fullConfig);
+        if (parsed && parsed.Settings) {
+          // 深度复制Settings对象，确保数据完整性
+          return JSON.stringify(parsed.Settings, null, 2);
+        }
+      }
+      
+      return fullConfig;
+    } catch (error) {
+      console.error('获取配置失败:', error);
+      return '{}';
+    }
+  };
+
+  // 生成配置JSON，并在配置改变时更新
+  useEffect(() => {
+    const configStr = getConfigJson();
+    setJsonConfig(configStr);
+    
+    try {
+      let displayJson;
+      
+      // 如果是私人服务器模式，显示JSON会有所不同
+      if (isStandaloneServerMode) {
+        displayJson = JSON.parse(configStr);
+      } else {
+        displayJson = JSON.parse(exportConfig());
+      }
+      
+      setParsedJson(displayJson);
+      
+      // 提取配置摘要
+      const summary: Record<string, any> = {};
+      configCategories.forEach(category => {
+        const items = category.items.map(item => {
+          let paths: string[][] = [];
+          
+          // 区分单个路径和多个路径的情况
+          if (typeof item.path[0] === 'string') {
+            // 单个路径的情况，如：['Settings', 'GameMode']
+            paths = [item.path as string[]];
+          } else if (Array.isArray(item.path[0])) {
+            // 多个路径的情况，如：[['Settings', 'StartHour'], ['Settings', 'StartMinute']]
+            paths = item.path as string[][];
+          }
+          
+          // 对于私人服务器模式，需要调整路径
+          if (isStandaloneServerMode) {
+            paths = paths.map(path => {
+              // 移除路径中的"Settings"前缀
+              if (path[0] === 'Settings') {
+                return path.slice(1);
+              }
+              return path;
+            });
+          }
+          
+          // 获取值
+          const rawValues = isStandaloneServerMode
+            ? getMultipleConfigValues(displayJson, paths)
+            : getMultipleConfigValues(displayJson, paths);
+            
+          return {
+            ...item,
+            value: paths.length === 1 ? rawValues[0] : rawValues
+          };
+        });
+        summary[category.key] = items;
+      });
+      
+      setConfigSummary(summary);
+    } catch (error) {
+      console.error('解析JSON失败:', error);
+    }
+  }, [config, exportConfig, isStandaloneServerMode]);
+
+  // 处理复制功能
+  const handleCopy = () => {
+    if (copyTimerRef.current) {
+      clearTimeout(copyTimerRef.current);
+    }
+
+    navigator.clipboard.writeText(jsonConfig).then(() => {
+      setCopySuccess(true);
+      copyTimerRef.current = setTimeout(() => {
+        setCopySuccess(false);
+      }, 2000);
+    }).catch(err => {
+      console.error('复制失败:', err);
+      alert('复制失败，请手动复制');
+    });
+  };
+
+  // 处理下载功能
+  const handleDownload = () => {
+    try {
+      // 根据当前模式决定文件名
+      const filename = isStandaloneServerMode ? 'ServerHostSettings.json' : downloadName;
+      
+      const blob = new Blob([jsonConfig], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      
+      // 创建一个临时的a元素
+      const downloadElement = document.createElement('a');
+      downloadElement.href = url;
+      downloadElement.download = filename;
+      
+      // 添加到DOM，触发点击，然后移除
+      document.body.appendChild(downloadElement);
+      downloadElement.click();
+      document.body.removeChild(downloadElement);
+      
+      // 释放URL对象
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+      }, 100);
+    } catch (error) {
+      console.error('下载失败:', error);
+      alert('下载失败，请尝试手动复制内容并保存');
+    }
+  };
+
+  // 打开文件选择对话框
+  const handleImportClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+  
   // 取消导入
   const handleCancelImport = () => {
     setShowImport(false);
@@ -1212,6 +1295,13 @@ const ConfigExportImport: React.FC = () => {
     if (window.confirm('确定要重置所有配置为默认值吗？此操作不可撤销。')) {
       resetConfig();
       
+      // 同时重置私人服务器模式
+      setIsStandaloneServerMode(false);
+      // 确保在浏览器环境中执行
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('vrising_standalone_server_mode');
+      }
+      
       if (resetTimerRef.current) {
         clearTimeout(resetTimerRef.current);
       }
@@ -1221,6 +1311,16 @@ const ConfigExportImport: React.FC = () => {
       resetTimerRef.current = setTimeout(() => {
         setResetSuccess(false);
       }, 3000);
+    }
+  };
+
+  // 切换私人服务器模式
+  const toggleServerMode = () => {
+    const newMode = !isStandaloneServerMode;
+    setIsStandaloneServerMode(newMode);
+    // 确保在浏览器环境中执行
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('vrising_standalone_server_mode', newMode.toString());
     }
   };
 
@@ -1256,12 +1356,27 @@ const ConfigExportImport: React.FC = () => {
   const cleanImportedJson = (jsonStr: string): string => {
     try {
       // 通过解析和重新序列化移除可能的非法字符或结构
-      const obj = JSON.parse(jsonStr);
+      let obj = JSON.parse(jsonStr);
+      
+      // 如果是私人服务器配置格式（没有Settings字段但有GameModeType等字段）
+      if (!obj.Settings && obj.GameModeType !== undefined) {
+        obj = {
+          Name: "导入的私人服务器配置",
+          Description: "从私人服务器配置文件导入的设置",
+          Settings: obj
+        };
+      }
+      
+      // 验证必要的字段
+      if (!obj.Settings) {
+        throw new Error('配置缺少必要的Settings字段');
+      }
+      
       return JSON.stringify(obj);
     } catch (error) {
       // 如果解析失败，原样返回
       console.error('清理JSON字符串失败:', error);
-      return jsonStr;
+      throw new Error('配置文件格式无效，无法处理');
     }
   };
 
@@ -1280,7 +1395,7 @@ const ConfigExportImport: React.FC = () => {
             className={styles.actionButton}
             icon={copySuccess ? "✓" : "📋"}
           >
-            {copySuccess ? '已复制' : '复制配置'}
+            {copySuccess ? '已复制' : (isStandaloneServerMode ? '复制服务器配置' : '复制配置')}
           </Button>
           
           <Button 
@@ -1290,7 +1405,7 @@ const ConfigExportImport: React.FC = () => {
             className={styles.actionButton}
             icon="💾"
           >
-            下载配置
+            {isStandaloneServerMode ? '下载服务器配置' : '下载配置'}
           </Button>
           
           <Button 
@@ -1337,6 +1452,14 @@ const ConfigExportImport: React.FC = () => {
                   <span className={styles.importPreviewLabel}>服务器名称:</span>
                   <span className={styles.importPreviewValue}>{importPreview.serverName}</span>
                 </div>
+                {importPreview.isStandaloneServer && (
+                  <div className={styles.importPreviewItem}>
+                    <span className={styles.importPreviewLabel}>配置类型:</span>
+                    <span className={styles.importPreviewValue} style={{color: '#4caf50'}}>
+                      私人服务器配置 (已自动适配)
+                    </span>
+                  </div>
+                )}
               </div>
               <div className={styles.importWarning}>
                 警告：导入将覆盖当前所有配置！
@@ -1365,9 +1488,35 @@ const ConfigExportImport: React.FC = () => {
           <div className={styles.jsonHeader}>
             <h4 className={styles.jsonTitle}>
               配置预览
+              {isStandaloneServerMode && (
+                <span style={{
+                  marginLeft: '0.75rem',
+                  fontSize: '0.85rem',
+                  color: '#ffb74d',
+                  backgroundColor: 'rgba(255, 183, 77, 0.15)',
+                  padding: '0.25rem 0.5rem',
+                  borderRadius: '4px',
+                  fontWeight: '500'
+                }}>
+                  私人服务器模式
+                </span>
+              )}
             </h4>
             <div className={styles.viewControls}>
               <div className={styles.buttonGroup}>
+                <Button 
+                  onClick={toggleServerMode} 
+                  variant="outline" 
+                  size="sm"
+                  className={styles.controlButton}
+                  style={{
+                    marginRight: '8px',
+                    backgroundColor: isStandaloneServerMode ? 'rgba(255, 183, 77, 0.2)' : 'transparent',
+                    color: isStandaloneServerMode ? '#ffb74d' : 'inherit'
+                  }}
+                >
+                  {isStandaloneServerMode ? '切换为普通模式' : '切换为私人服务器模式'}
+                </Button>
                 <Button 
                   onClick={toggleExpandAll} 
                   variant="outline" 
@@ -1412,7 +1561,9 @@ const ConfigExportImport: React.FC = () => {
             </div>
             
             <div className={styles.configSummaryWrapper}>
-              {configCategories.map(category => renderConfigCategory(category))}
+              {configCategories
+                .filter(category => !isStandaloneServerMode || category.key !== 'basic')
+                .map(category => renderConfigCategory(category))}
             </div>
           </div>
         </div>
@@ -1458,6 +1609,19 @@ const ConfigExportImport: React.FC = () => {
               <li>调整完成后点击【<strong>复制配置</strong>】，将内容替换到原规则文件中</li>
               <li>重新启动游戏，依次选择【<strong>加载游戏</strong>】 → 选择您的存档</li>
               <li>点击【<strong>编辑设置</strong>】 → 【<strong>选择规则</strong>】 → 找到您修改过的规则 → 点击保存 → 不要修改任何除最大人数、血族人数的参数 → 进入游戏</li>
+            </ul>
+          </div>
+          
+          <div className={styles.useCaseContainer}>
+            <span className={styles.stepHeading}>
+              <span className={styles.stepIcon}>🖥️</span>
+              私人服务器配置
+            </span>
+            <ul className={styles.steps}>
+              <li>本工具现已支持导入私人服务器配置文件 (ServerHostSettings.json)，系统会自动识别格式并进行适配</li>
+              <li>如果您有私人服务器的配置文件，可以直接点击【<strong>导入配置</strong>】按钮导入</li>
+              <li>导入后可以在本工具中调整参数，然后通过【<strong>复制配置</strong>】或【<strong>下载配置</strong>】获取修改后的配置</li>
+              <li>若要在私人服务器中使用，请注意只需使用【Settings】内的内容</li>
             </ul>
           </div>
 
