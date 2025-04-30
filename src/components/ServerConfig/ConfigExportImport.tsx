@@ -1620,7 +1620,7 @@ const ConfigExportImport: React.FC = () => {
               ⚠️ 重要提示：修改服务器配置前，请先备份您的服务器存档文件！
             </div>
             <ul className={styles.steps}>
-              <li>本工具现已支持导入私人服务器配置文件 (ServerHostSettings.json)，系统会自动识别格式并进行适配</li>
+              <li>本工具现已支持导入私人服务器配置文件 (ServerGameSettings.json)，系统会自动识别格式并进行适配</li>
               <li>如果您有私人服务器的配置文件，可以直接点击【<strong>导入配置</strong>】按钮导入</li>
               <li>导入后可以在本工具中调整参数，然后通过【<strong>复制配置</strong>】或【<strong>下载配置</strong>】获取修改后的配置</li>
               <li>若要在私人服务器中使用，请注意只需使用【Settings】内的内容</li>
