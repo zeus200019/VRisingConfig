@@ -51,7 +51,7 @@ const ConfigExportImport: React.FC = () => {
   const [copySuccess, setCopySuccess] = useState(false);
   const [importSuccess, setImportSuccess] = useState(false);
   const [resetSuccess, setResetSuccess] = useState(false);
-  const [downloadName] = useState('ServerHostSettings.json');
+  const [downloadName] = useState('ServerGameSettings.json');
   const [isExpanded, setIsExpanded] = useState(true); // 默认全部展开
   // 导入预览信息
   const [importPreview, setImportPreview] = useState<ImportPreview | null>(null);
@@ -1178,7 +1178,7 @@ const ConfigExportImport: React.FC = () => {
   const handleDownload = () => {
     try {
       // 根据当前模式决定文件名
-      const filename = isStandaloneServerMode ? 'ServerHostSettings.json' : downloadName;
+      const filename = isStandaloneServerMode ? 'ServerGameSettings.json' : downloadName;
       
       const blob = new Blob([jsonConfig], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
