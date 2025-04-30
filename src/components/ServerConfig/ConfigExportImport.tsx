@@ -1545,7 +1545,7 @@ const ConfigExportImport: React.FC = () => {
                     onEdit={false}
                     onAdd={false}
                     onDelete={false}
-                    sortKeys={true}
+                    sortKeys={false}
                     style={{ 
                       backgroundColor: 'transparent',
                       width: '100%',
