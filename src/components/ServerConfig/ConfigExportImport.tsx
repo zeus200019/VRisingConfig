@@ -1573,7 +1573,7 @@ const ConfigExportImport: React.FC = () => {
           <div className={styles.useCaseContainer}>
             <span className={styles.stepHeading}>
               <span className={styles.stepIcon}>🎮</span>
-              新服务器配置流程
+              新游戏规则配置流程
             </span>
             <ul className={styles.steps}>
               <li>启动游戏，在主菜单选择【<strong>开始游戏</strong>】</li>
@@ -1592,7 +1592,7 @@ const ConfigExportImport: React.FC = () => {
           <div className={styles.useCaseContainer}>
             <span className={styles.stepHeading}>
               <span className={styles.stepIcon}>💾</span>
-              现有存档配置流程
+              现有存档规则配置流程
             </span>
             <div className={styles.importWarning}>
               ⚠️ 重要提示：修改服务器配置前，请先备份您的存档文件！点击游戏主菜单的【加载游戏】，选择您想更改规则的存档，点击【打开目录】，备份该文件夹中的所有文件。
