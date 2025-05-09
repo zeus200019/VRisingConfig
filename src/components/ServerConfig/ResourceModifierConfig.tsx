@@ -343,7 +343,7 @@ const ResourceModifierConfig: React.FC = () => {
                 value={config.Settings.CraftRateModifier}
                 onChange={handleSliderChange('CraftRateModifier')}
                 valueFormat={formatMultiplier}
-                helperText="降低值使制作速度更快"
+                helperText="增加值使制作速度更快"
                 showTicks
               />
               
@@ -355,7 +355,7 @@ const ResourceModifierConfig: React.FC = () => {
                 value={config.Settings.RefinementRateModifier}
                 onChange={handleSliderChange('RefinementRateModifier')}
                 valueFormat={formatMultiplier}
-                helperText="降低值使精炼速度更快"
+                helperText="增加值使精炼速度更快"
                 showTicks
               />
               
@@ -367,7 +367,7 @@ const ResourceModifierConfig: React.FC = () => {
                 value={config.Settings.ResearchTimeModifier}
                 onChange={handleSliderChange('ResearchTimeModifier')}
                 valueFormat={formatMultiplier}
-                helperText="降低值使研究完成更快"
+                helperText="增加值使研究完成更快"
                 showTicks
               />
               
@@ -379,7 +379,7 @@ const ResourceModifierConfig: React.FC = () => {
                 value={config.Settings.ServantConvertRateModifier}
                 onChange={handleSliderChange('ServantConvertRateModifier')}
                 valueFormat={formatMultiplier}
-                helperText="降低值使仆从转化更快"
+                helperText="增加值使仆从转化更快"
                 showTicks
               />
             </div>
